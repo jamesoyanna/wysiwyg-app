@@ -25,6 +25,7 @@
   margin-top: 20px;
   margin-bottom: 40px;
   border: 1px solid #ccc;
+  padding-bottom: 100px;
 }
 
 .wrapper-class {
@@ -69,14 +70,46 @@ button {
   margin-right: auto;
   margin-left: 24rem;
   position: relative;
-  bottom: 70px;
-  width: 25px;
-  height: 25px;
+  bottom: 93px;
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
   border: none;
   background-color: #e7f1e9;
   display: flex;
   justify-content: center;
   align-items: center;
+  font-size: 26px;
   cursor: pointer;
 }
+
+.dropdown-container {
+  position: relative;
+  margin-top: -90px;
+  left: 0;
+  margin-right: auto;
+  margin-left: 24rem;
+  background-color: #fff;
+  /* border: 1px solid #ccc; */
+  border-radius: 4px;
+  padding: 5px;
+  z-index: 999;
+  box-shadow: 1px 1px rgba(0, 0, 0, 0.1);
+}
+
+
+.dropdown-options {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.dropdown-options li {
+  padding: 8px;
+  cursor: pointer;
+}
+
+.dropdown-options li:hover {
+  background-color: #f0f0f0;
+}
+
