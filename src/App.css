@@ -3,7 +3,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 100%; /* Set the width to match the Editor's width */
+  width: 100%;
   padding-bottom: 100px;
 }
 
@@ -25,7 +25,6 @@
   margin-top: 20px;
   margin-bottom: 40px;
   border: 1px solid #ccc;
-  -webkit-tap-highlight-color: transparent;
 }
 
 .wrapper-class {
@@ -66,15 +65,16 @@
   text-align: center;
 }
 
-.Media-upload {
+button {
+  margin-right: auto;
+  margin-left: 24rem;
   position: relative;
   bottom: 70px;
-  left: 1px;
   width: 25px;
   height: 25px;
   border-radius: 50%;
   border: none;
-  background-color: #f0f0f0;
+  background-color: #e7f1e9;
   display: flex;
   justify-content: center;
   align-items: center;

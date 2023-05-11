@@ -126,7 +126,7 @@ function App() {
             </div>
           )}
       </div>
-      <button className='Media-upload' onClick={handleButtonClick}>+</button>
+      <button onClick={handleButtonClick}>+</button>
     </div>
   );
 }
