@@ -78,7 +78,6 @@ function App() {
           wrapperClassName="wrapper-class"
           editorClassName="editor-class"
           toolbarClassName="toolbar-class"
-          wrapperStyle={{ paddingBottom: '40px' }}
           toolbar={{
             options: ['blockType', 'link', 'image', 'textAlign', 'inline', 'list'],
             blockType: {
