@@ -1,7 +1,8 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { ContentState, convertToRaw, convertFromRaw  } from 'draft-js';
 import { EditorState, AtomicBlockUtils  } from 'draft-js';
 import { Editor } from 'react-draft-wysiwyg';
+import Modal from 'react-modal';
 import ImagePlugin from 'draft-js-image-plugin';
  import VideoPlugin from 'draft-js-video-plugin';
  import ReactPlayer from 'react-player';
@@ -25,12 +26,42 @@ function App() {
   const fileInputRef = useRef(null);
   const [showDropdown, setShowDropdown] = useState(false);
 
+const [videoLink, setVideoLink] = useState('');
+const [socialMediaLink, setSocialMediaLink] = useState('');
+const [isLoading, setIsLoading] = useState(false);
+const [isModalOpen, setIsModalOpen] = useState(false);
+const [inputValue, setInputValue] = useState('');
+const [error, setError] = useState('');
+
+
+const openModal = () => {
+  setIsModalOpen(true);
+};
+
+// Function to handle closing the modal
+const closeModal = () => {
+  setIsModalOpen(false);
+  setInputValue('');
+  setError('');
+};
+
+const rootElementRef = useRef(null);
+
+
+useEffect(() => {
+  Modal.setAppElement(rootElementRef.current);
+}, []);
+
+
+
   const handleEditorChange = (editorState) => {
     setEditorState(editorState);
   };
 
   const handleImageUpload = async (file) => {
     try {
+      setIsLoading(true);
+
       // Create a new FormData object
       const formData = new FormData();
       formData.append('file', file); // Append the selected file to the FormData
@@ -57,11 +88,16 @@ function App() {
 
         // Set the selected image with the Cloudinary URL
         setSelectedImage(imageUrl);
+        closeModal();
       } else {
         console.error('Image upload failed');
+        setError('Image upload failed');
       }
     } catch (error) {
       console.error('Image upload error:', error);
+      setError('Image upload error');
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -69,33 +105,48 @@ function App() {
     setShowDropdown(!showDropdown);
   };
   
-  
-
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     handleImageUpload(file);
   };
 
-
   const handleOptionClick = (option) => {
     if (option === 'image') {
       fileInputRef.current.click();
     } else if (option === 'video') {
-      const videoLink = prompt('Enter YouTube video link');
-      if (videoLink) {
-        addVideoBlock(videoLink);
-        console.log(videoLink);
-      }
+      setVideoLink('');
+      openModal();
     } else if (option === 'social-media') {
-      const socialMediaLink = prompt('Enter social media link');
-      if (socialMediaLink) {
-        addSocialMediaBlock(socialMediaLink);
-        console.log(socialMediaLink);
-      }
+      setSocialMediaLink('');
+      openModal();
     }
   };
   
+  const isVideoUrl = (url) => {
+    const youtubePattern = /^(https?:\/\/)?(www\.)?youtube\.com\/watch\?v=([a-zA-Z0-9_-]{11})/;
+    return youtubePattern.test(url);
+  };
+  
+  const isSocialMediaUrl = (url) => {
+    const urlPattern = /^(www\.)|^(http(s)?:\/\/)/i;
+    return urlPattern.test(url);
+  };
+  
+  
+  
 
+    
+  const handleSubmit = () => {
+    if (isVideoUrl(inputValue)) {
+      addVideoBlock(inputValue);
+      closeModal();
+    } else if (isSocialMediaUrl(inputValue)) {
+      addSocialMediaBlock(inputValue);
+      closeModal();
+    } else {
+      setError('Invalid URL');
+    }
+  };
   
   const mediaBlockRenderer = (block) => {
     if (block.getType() === 'atomic') {
@@ -168,7 +219,7 @@ function App() {
   };
   
   return (
-    <div className="App">
+    <div ref={rootElementRef} className="App">
       <div className="Editor-wrapper">
         <header className="App-header">This is the title</header>
         <div className="Editor-container">
@@ -212,7 +263,12 @@ function App() {
             plugins={[imagePlugin, videoPlugin]}
             blockRendererFn={mediaBlockRenderer}
           ></Editor>
-
+           {isLoading && (
+            <div className="loader-container">
+              <div className="loader"></div>
+              <span>uploading image...</span>
+            </div>
+          )}
           <input
             type="file"
             ref={fileInputRef}
@@ -236,8 +292,38 @@ function App() {
     </div>
   )}
       </div>
+    
       <button onClick={handleButtonClick}>+</button>
-       {/* Dropdown */}
+      <div>
+      <Modal
+        isOpen={isModalOpen}
+        onRequestClose={closeModal}
+        className="modal-container"
+        overlayClassName="modal-overlay"
+      >
+        <div className="modal-content">
+          {/* Modal content */}
+          <input
+            type="text"
+            value={inputValue}
+            onChange={(e) => setInputValue(e.target.value)}
+            // className="modal-input"
+            placeholder="Enter URL"
+            className={error ? 'modal-input modal-input-error' : 'modal-input'}
+          />
+           {error && <span className="modal-error-message">{error}</span>}
+          <div className="modal-button-group">
+            <button onClick={handleSubmit} className="modal-submit-button">
+              Submit
+            </button>
+            <button onClick={closeModal} className="modal-cancel-button">
+              Cancel
+            </button>
+          </div>
+        </div>
+      </Modal>
+    </div>
+
        {showDropdown && (
          <div className="dropdown-container">
            <h2 className="dropdown-title">EMBEDS</h2>
