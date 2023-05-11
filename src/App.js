@@ -1,8 +1,10 @@
 import React, { useState, useRef } from 'react';
-import { ContentState, convertToRaw, convertFromRaw } from 'draft-js';
-import { EditorState } from 'draft-js';
+import { ContentState, convertToRaw, convertFromRaw  } from 'draft-js';
+import { EditorState, AtomicBlockUtils  } from 'draft-js';
 import { Editor } from 'react-draft-wysiwyg';
 import ImagePlugin from 'draft-js-image-plugin';
+ import VideoPlugin from 'draft-js-video-plugin';
+ import ReactPlayer from 'react-player';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import './App.css';
 import PictureIcon from './icons/picture-icon.png'
@@ -10,13 +12,15 @@ import VideoIcon from './icons/video-icon.png'
 import SocialIcon from './icons/facebook-con.svg'
 
 const imagePlugin = ImagePlugin();
+const videoPlugin = VideoPlugin()
 
 function App() {
-  const _contentState = ContentState.createFromText('Sample content state');
+  const _contentState = ContentState.createFromText('');
   const raw = convertToRaw(_contentState);
   const contentState = convertFromRaw(raw); // Convert raw JSON to ContentState
   const [editorState, setEditorState] = useState(EditorState.createWithContent(contentState));
   const [selectedImage, setSelectedImage] = useState(null);
+  const [selectedVideo, setSelectedVideo] = useState(null);
   const fileInputRef = useRef(null);
   const [showDropdown, setShowDropdown] = useState(false);
 
@@ -72,17 +76,69 @@ function App() {
   };
 
 
+
   const handleOptionClick = (option) => {
-    console.log('Selected Option:', option);
-    setShowDropdown(false);
+    if (option === 'image') {
+      fileInputRef.current.click();
+    } else if (option === 'video') {
+      const videoLink = prompt('Enter YouTube video link');
+      if (videoLink) {
+        addVideoBlock(videoLink);
+        console.log(videoLink);
+      }
+    } else if (option === 'social-media') {
+      // Handle social media option here
+      console.log('Social media option clicked');
+    }
+  };
+
+  
+  const mediaBlockRenderer = (block) => {
+    if (block.getType() === 'atomic') {
+      const contentState = editorState.getCurrentContent();
+      const entity = contentState.getEntity(block.getEntityAt(0));
+      const type = entity.getType();
+
+      if (type === 'video') {
+        const { src } = entity.getData();
+        return {
+          component: VideoBlock,
+          editable: false,
+          props: {
+            src: src,
+          },
+        };
+      }
+    }
+
+    return null;
+  };
+
+  const addVideoBlock = (videoUrl) => {
+    const contentState = editorState.getCurrentContent();
+    const contentStateWithEntity = contentState.createEntity('video', 'IMMUTABLE', { src: videoUrl });
+    const entityKey = contentStateWithEntity.getLastCreatedEntityKey();
+    const newEditorState = EditorState.set(editorState, { currentContent: contentStateWithEntity });
+    const newEditorStateWithBlock = AtomicBlockUtils.insertAtomicBlock(newEditorState, entityKey, ' ');
+    setSelectedVideo(videoUrl); 
+    setEditorState(newEditorStateWithBlock);
+  };
+
+  const VideoBlock = ({ src }) => {
+    return (
+      <div className="video-block">
+        <ReactPlayer url={src} controls width="100%" height="auto" />
+      </div>
+    );
   };
   
-
+  
   return (
     <div className="App">
       <div className="Editor-wrapper">
         <header className="App-header">This is the title</header>
         <div className="Editor-container">
+          
           <Editor
             editorState={editorState}
             onEditorStateChange={handleEditorChange}
@@ -119,7 +175,8 @@ function App() {
                 options: ['left', 'center', 'right'],
               },
             }}
-            plugins={[imagePlugin]}
+            plugins={[imagePlugin, videoPlugin]}
+            blockRendererFn={mediaBlockRenderer}
           ></Editor>
 
           <input
@@ -134,6 +191,11 @@ function App() {
             <img src={selectedImage} alt="Selected" height="150px" width="150px" />
           </div>
         )}
+          {selectedVideo && (
+    <div>
+      <VideoBlock src={selectedVideo} />
+    </div>
+  )}
       </div>
       <button onClick={handleButtonClick}>+</button>
        {/* Dropdown */}
@@ -149,12 +211,12 @@ function App() {
              </div>
            </li>
            <li onClick={() => handleOptionClick('video')}>
-             <img src={VideoIcon} alt="Video" className="option-icon" />
-             <div>
-               <span className="option-title">Video</span>
-               <p className="option-description">Embed a YouTube video</p>
-             </div>
-           </li>
+        <img src={VideoIcon} alt="Video" className="option-icon" />
+       <div>
+    <span className="option-title">Video</span>
+    <p className="option-description">Embed a YouTube video</p>
+  </div>
+</li>
            <li onClick={() => handleOptionClick('social-media')}>
              <img src={SocialIcon} alt="Social Media" className="option-icon" />
              <div>
