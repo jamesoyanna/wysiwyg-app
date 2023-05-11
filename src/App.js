@@ -21,6 +21,7 @@ function App() {
   const [editorState, setEditorState] = useState(EditorState.createWithContent(contentState));
   const [selectedImage, setSelectedImage] = useState(null);
   const [selectedVideo, setSelectedVideo] = useState(null);
+  const [selectedSocialMedia, setSelectedSocialMedia] = useState(null);
   const fileInputRef = useRef(null);
   const [showDropdown, setShowDropdown] = useState(false);
 
@@ -76,7 +77,6 @@ function App() {
   };
 
 
-
   const handleOptionClick = (option) => {
     if (option === 'image') {
       fileInputRef.current.click();
@@ -87,10 +87,14 @@ function App() {
         console.log(videoLink);
       }
     } else if (option === 'social-media') {
-      // Handle social media option here
-      console.log('Social media option clicked');
+      const socialMediaLink = prompt('Enter social media link');
+      if (socialMediaLink) {
+        addSocialMediaBlock(socialMediaLink);
+        console.log(socialMediaLink);
+      }
     }
   };
+  
 
   
   const mediaBlockRenderer = (block) => {
@@ -98,7 +102,7 @@ function App() {
       const contentState = editorState.getCurrentContent();
       const entity = contentState.getEntity(block.getEntityAt(0));
       const type = entity.getType();
-
+  
       if (type === 'video') {
         const { src } = entity.getData();
         return {
@@ -108,11 +112,32 @@ function App() {
             src: src,
           },
         };
+      } else if (type === 'social-media') {
+        const { linkUrl } = entity.getData();
+        return {
+          component: SocialMediaBlock,
+          editable: false,
+          props: {
+            linkUrl: linkUrl,
+          },
+        };
       }
     }
-
+  
     return null;
   };
+  
+
+  const addSocialMediaBlock = (linkUrl) => {
+    const contentState = editorState.getCurrentContent();
+    const contentStateWithEntity = contentState.createEntity('social-media', 'IMMUTABLE', { linkUrl });
+    const entityKey = contentStateWithEntity.getLastCreatedEntityKey();
+    const newEditorState = EditorState.set(editorState, { currentContent: contentStateWithEntity });
+    const newEditorStateWithBlock = AtomicBlockUtils.insertAtomicBlock(newEditorState, entityKey, ' ');
+    setEditorState(newEditorStateWithBlock);
+    setSelectedSocialMedia(linkUrl); 
+  };
+  
 
   const addVideoBlock = (videoUrl) => {
     const contentState = editorState.getCurrentContent();
@@ -132,6 +157,15 @@ function App() {
     );
   };
   
+  const SocialMediaBlock = ({ linkUrl }) => {
+    return (
+      <div className="social-media-block">
+        <a href={linkUrl} target="_blank" rel="noopener noreferrer">
+          {linkUrl}
+        </a>
+      </div>
+    );
+  };
   
   return (
     <div className="App">
@@ -194,6 +228,11 @@ function App() {
           {selectedVideo && (
     <div>
       <VideoBlock src={selectedVideo} />
+    </div>
+  )}
+   {selectedSocialMedia && (
+    <div>
+      <SocialMediaBlock linkUrl={selectedSocialMedia} />
     </div>
   )}
       </div>
