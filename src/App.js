@@ -69,9 +69,9 @@ function App() {
 
   return (
     <div className="App">
-      <header className="App-header">This is the title</header>
       <div className="Editor-wrapper">
-       
+      <header className="App-header">This is the title</header>
+      <div className="Editor-container">
         <Editor
           editorState={editorState}
           onEditorStateChange={handleEditorChange}
@@ -113,19 +113,21 @@ function App() {
         >
           
         </Editor>
-        <button className='Media-upload' onClick={handleButtonClick}>+</button>
+      
         <input
           type="file"
           ref={fileInputRef}
           style={{ display: 'none' }}
           onChange={handleFileChange}
         />
+        </div>
         {selectedImage && (
             <div>
                <img src={selectedImage} alt="Selected" height="150px" width="150px" />
             </div>
           )}
       </div>
+      <button className='Media-upload' onClick={handleButtonClick}>+</button>
     </div>
   );
 }
