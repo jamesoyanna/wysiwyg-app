@@ -5,7 +5,9 @@ import { Editor } from 'react-draft-wysiwyg';
 import ImagePlugin from 'draft-js-image-plugin';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import './App.css';
-import Select from 'react-select';
+import PictureIcon from './icons/picture-icon.png'
+import VideoIcon from './icons/video-icon.png'
+import SocialIcon from './icons/facebook-con.svg'
 
 const imagePlugin = ImagePlugin();
 
@@ -136,13 +138,33 @@ function App() {
       <button onClick={handleButtonClick}>+</button>
        {/* Dropdown */}
        {showDropdown && (
-          <div className="dropdown-container">
-            <ul className="dropdown-options">
-              <li onClick={() => handleOptionClick('image')}>Upload Image</li>
-              <li onClick={() => handleOptionClick('video')}>Upload Video</li>
-              <li onClick={() => handleOptionClick('social-media')}>Upload Social Media Link</li>
-            </ul>
-          </div>
+         <div className="dropdown-container">
+           <h2 className="dropdown-title">EMBEDS</h2>
+         <ul className="dropdown-options">
+           <li onClick={() => handleOptionClick('image')}>
+             <img src={PictureIcon} alt="icon" className="option-icon" />
+             <div>
+               <span className="option-title">Picture</span>
+               <p className="option-description">JPEG, PNG</p>
+             </div>
+           </li>
+           <li onClick={() => handleOptionClick('video')}>
+             <img src={VideoIcon} alt="Video" className="option-icon" />
+             <div>
+               <span className="option-title">Video</span>
+               <p className="option-description">Embed a YouTube video</p>
+             </div>
+           </li>
+           <li onClick={() => handleOptionClick('social-media')}>
+             <img src={SocialIcon} alt="Social Media" className="option-icon" />
+             <div>
+               <span className="option-title">Social</span>
+               <p className="option-description">Embed a Facebook link</p>
+             </div>
+           </li>
+         </ul>
+       </div>
+       
         )}
     </div>
   );

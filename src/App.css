@@ -90,11 +90,9 @@ button {
   margin-right: auto;
   margin-left: 24rem;
   background-color: #fff;
-  /* border: 1px solid #ccc; */
   border-radius: 4px;
   padding: 5px;
-  z-index: 999;
-  box-shadow: 1px 1px rgba(0, 0, 0, 0.1);
+  box-shadow: 1px 1px 1px 2px rgba(0, 0, 0, 0.1);
 }
 
 
@@ -104,12 +102,35 @@ button {
   margin: 0;
 }
 
+.dropdown-options li:hover {
+  background-color: #e9f3ed;
+}
+
 .dropdown-options li {
-  padding: 8px;
+  display: flex;
+  align-items: center;
+  padding: 4px;
   cursor: pointer;
 }
 
-.dropdown-options li:hover {
-  background-color: #f0f0f0;
+.option-icon {
+  width: 20px;
+  height: 20px;
+  margin-right: 8px;
 }
 
+.option-title {
+  font-weight: bold;
+  font-size: 12px;
+}
+
+.option-description {
+  font-size: 10px;
+  margin-top: 4px;
+  color:#686464
+}
+
+.dropdown-title {
+  text-transform: uppercase;
+  font-size: 12px;
+}
