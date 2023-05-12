@@ -18,6 +18,7 @@
 
 
 .Editor-wrapper {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -25,7 +26,7 @@
   margin-top: 20px;
   margin-bottom: 40px;
   border: 1px solid #ccc;
-  padding-bottom: 100px;
+  padding-bottom: 150px;
 }
 
 .wrapper-class {
@@ -68,9 +69,9 @@
 
 button {
   margin-right: auto;
-  margin-left: 24rem;
+  margin-left: 17rem;
   position: relative;
-  bottom: 93px;
+  bottom: 150px;
   width: 30px;
   height: 30px;
   border-radius: 50%;
@@ -85,10 +86,10 @@ button {
 
 .dropdown-container {
   position: relative;
-  margin-top: -90px;
+  margin-top: -140px;
   left: 0;
   margin-right: auto;
-  margin-left: 24rem;
+  margin-left: 17rem;
   background-color: #fff;
   border-radius: 4px;
   padding: 5px;
@@ -137,6 +138,7 @@ button {
   font-size: 12px;
 }
 
+/* Modal style */
 .modal-container {
   position: fixed;
   top: 50%;
@@ -244,3 +246,38 @@ button {
   }
 }
 
+
+/* Word count */
+
+.Editor-footer {
+  position: absolute;
+  bottom: 0px;
+  left: 0;
+  width: 97%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  background-color: #f5f5f5;
+}
+
+.word-count {
+  font-size: 14px;
+  color: #555555;
+  margin-left: auto;
+
+}
+
+.post-button {
+  padding: 8px 24px;
+  border: none;
+  border-radius: 4px;
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: bold;
+  background-color: green;
+  top: 50px;
+  left: 60px;
+  cursor: pointer;
+  flex:0 0 auto; 
+}

@@ -15,6 +15,7 @@ const EditorComponent = () => {
   const raw = convertToRaw(_contentState);
   const contentState = convertFromRaw(raw);
   const [editorState, setEditorState] = useState(EditorState.createWithContent(contentState));
+  const [wordCount, setWordCount] = useState(0);
   const fileInputRef = useRef(null);
 
   useEffect(() => {
@@ -24,7 +25,12 @@ const EditorComponent = () => {
 
   const handleEditorChange = (editorState) => {
     setEditorState(editorState);
+    const contentState = editorState.getCurrentContent();
+    const plainText = contentState.getPlainText('');
+    const words = plainText.trim().split(/\s+/);
+    setWordCount(words.length);
   };
+  
 
   const handleImageUpload = (file) => {
     // Handle image upload logic here
@@ -82,15 +88,23 @@ const EditorComponent = () => {
             options: ['left', 'center', 'right'],
           },
         }}
+        readOnly={wordCount >= 1000}
         plugins={[imagePlugin, videoPlugin]}
         blockRendererFn={mediaBlockRenderer}
       />
+      
       <input
         type="file"
         ref={fileInputRef}
         style={{ display: 'none' }}
         onChange={handleFileChange}
       />
+      <div className="Editor-footer">
+  <div className="word-count">{`${wordCount}/1000 words`}</div>
+  <button className="post-button" style={{ backgroundColor: 'green' }}>
+    Post
+  </button>
+</div>
     </div>
   );
 };
