@@ -22,10 +22,10 @@ function App() {
   const [selectedSocialMedia, setSelectedSocialMedia] = useState(null);
   const fileInputRef = useRef(null);
   const [showDropdown, setShowDropdown] = useState(false);
-const [isLoading, setIsLoading] = useState(false);
-const [isModalOpen, setIsModalOpen] = useState(false);
-const [inputValue, setInputValue] = useState('');
-const [error, setError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [inputValue, setInputValue] = useState('');
+  const [error, setError] = useState('');
 
 
 const openModal = () => {
@@ -44,7 +44,7 @@ useEffect(() => {
   Modal.setAppElement(rootElementRef.current);
 }, []);
 
-  const handleImageUpload = async (file) => {
+  const handleImageUpload = async (file: File) => {
     try {
       setIsLoading(true);
 
@@ -91,12 +91,12 @@ useEffect(() => {
     setShowDropdown(!showDropdown);
   };
   
-  const handleFileChange = (event) => {
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files[0];
     handleImageUpload(file);
   };
 
-  const handleOptionClick = (option) => {
+  const handleOptionClick = (option: string) => {
     if (option === 'image') {
       fileInputRef.current.click();
     } else if (option === 'video') {
@@ -106,12 +106,12 @@ useEffect(() => {
     }
   };
   
-  const isVideoUrl = (url) => {
+  const isVideoUrl = (url: string) => {
     const youtubePattern = /^(https?:\/\/)?(www\.)?youtube\.com\/watch\?v=([a-zA-Z0-9_-]{11})/;
     return youtubePattern.test(url);
   };
   
-  const isSocialMediaUrl = (url) => {
+  const isSocialMediaUrl = (url: string) => {
     const urlPattern = /^(www\.)|^(http(s)?:\/\/)/i;
     return urlPattern.test(url);
   };
@@ -128,7 +128,7 @@ useEffect(() => {
     }
   };
  
-  const addSocialMediaBlock = (linkUrl) => {
+  const addSocialMediaBlock = (linkUrl: string) => {
     const contentState = editorState.getCurrentContent();
     const contentStateWithEntity = contentState.createEntity('social-media', 'IMMUTABLE', { linkUrl });
     const entityKey = contentStateWithEntity.getLastCreatedEntityKey();
@@ -139,7 +139,7 @@ useEffect(() => {
   };
   
 
-  const addVideoBlock = (videoUrl) => {
+  const addVideoBlock = (videoUrl: string) => {
     const contentState = editorState.getCurrentContent();
     const contentStateWithEntity = contentState.createEntity('video', 'IMMUTABLE', { src: videoUrl });
     const entityKey = contentStateWithEntity.getLastCreatedEntityKey();
@@ -149,7 +149,7 @@ useEffect(() => {
     setEditorState(newEditorStateWithBlock);
   };
   
-  const SocialMediaBlock = ({ linkUrl }) => {
+  const SocialMediaBlock = ({ linkUrl }: { linkUrl: string }) => {
     return (
       <div className="social-media-block">
         <SocialMediaBlockComponent linkUrl={linkUrl} />

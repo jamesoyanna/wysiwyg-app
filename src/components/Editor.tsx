@@ -1,52 +1,33 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { ContentState, convertToRaw, convertFromRaw } from 'draft-js';
-import { EditorState} from 'draft-js';
-import { Editor } from 'react-draft-wysiwyg';
-import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
-import ImagePlugin from 'draft-js-image-plugin';
-import VideoPlugin from 'draft-js-video-plugin';
-import '../App.css';
+import React, { useState, useEffect, useRef } from "react";
+import { ContentState, convertToRaw, convertFromRaw, EditorState } from "draft-js";
+import { Editor } from "react-draft-wysiwyg";
+import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+import ImagePlugin from "draft-js-image-plugin";
+import VideoPlugin from "draft-js-video-plugin";
+import "../App.css";
 
 const imagePlugin = ImagePlugin();
 const videoPlugin = VideoPlugin();
 
-const EditorComponent = () => {
-  const _contentState = ContentState.createFromText('');
+const EditorComponent: React.FC = () => {
+  const _contentState = ContentState.createFromText("");
   const raw = convertToRaw(_contentState);
   const contentState = convertFromRaw(raw);
   const [editorState, setEditorState] = useState(EditorState.createWithContent(contentState));
   const [wordCount, setWordCount] = useState(0);
-  const fileInputRef = useRef(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    fileInputRef.current = document.createElement('input');
-    fileInputRef.current.type = 'file';
+    fileInputRef.current = document.createElement("input");
+    fileInputRef.current.type = "file";
   }, []);
 
-  const handleEditorChange = (editorState) => {
+  const handleEditorChange = (editorState: EditorState) => {
     setEditorState(editorState);
     const contentState = editorState.getCurrentContent();
-    const plainText = contentState.getPlainText('');
+    const plainText = contentState.getPlainText("");
     const words = plainText.trim().split(/\s+/);
     setWordCount(words.length);
-  };
-  
-
-  const handleImageUpload = (file) => {
-    // Handle image upload logic here
-  };
-
-  const handleFileChange = (event) => {
-    const file = event.target.files[0];
-    handleImageUpload(file);
-  };
-
-  const mediaBlockRenderer = (block) => {
-    // Handle media block rendering logic here
-  };
-
-  const addImageBlock = () => {
-    // Handle adding an image block logic here
   };
 
   return (
@@ -82,7 +63,6 @@ const EditorComponent = () => {
               width: '100%',
               height: 'auto',
             },
-            onClick: addImageBlock,
           },
           textAlign: {
             options: ['left', 'center', 'right'],
@@ -90,21 +70,19 @@ const EditorComponent = () => {
         }}
         readOnly={wordCount >= 1000}
         plugins={[imagePlugin, videoPlugin]}
-        blockRendererFn={mediaBlockRenderer}
       />
-      
+
       <input
         type="file"
         ref={fileInputRef}
         style={{ display: 'none' }}
-        onChange={handleFileChange}
       />
       <div className="Editor-footer">
-  <div className="word-count">{`${wordCount}/1000 words`}</div>
-  <button className="post-button" style={{ backgroundColor: 'green' }}>
-    Post
-  </button>
-</div>
+        <div className="word-count">{`${wordCount}/1000 words`}</div>
+        <button className="post-button" style={{ backgroundColor: 'green' }}>
+          Post
+        </button>
+      </div>
     </div>
   );
 };

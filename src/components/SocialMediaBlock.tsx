@@ -1,6 +1,10 @@
-import React from 'react';
+import React from "react";
 
-const SocialMediaBlockComponent = ({ linkUrl }) => {
+interface SocialMediaBlockProps {
+  linkUrl: string;
+}
+
+const SocialMediaBlockComponent: React.FC<SocialMediaBlockProps> = ({ linkUrl }: SocialMediaBlockProps) => {
   return (
     <div className="social-media-block">
       <a href={linkUrl} target="_blank" rel="noopener noreferrer">

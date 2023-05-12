@@ -1,9 +1,13 @@
 import React from 'react';
-import PictureIcon from '../icons/picture-icon.png'
-import VideoIcon from '../icons/video-icon.png'
-import SocialIcon from '../icons/facebook-con.svg'
+import PictureIcon from '../icons/picture-icon.png';
+import VideoIcon from '../icons/video-icon.png';
+import SocialIcon from '../icons/facebook-con.svg';
 
-const Dropdown = ({ handleOptionClick }) => {
+interface DropdownProps {
+  handleOptionClick: (option: string) => void;
+}
+
+const Dropdown: React.FC<DropdownProps> = ({ handleOptionClick }) => {
   return (
     <div className="dropdown-container">
       <h2 className="dropdown-title">EMBEDS</h2>

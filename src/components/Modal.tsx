@@ -1,8 +1,16 @@
-import React from 'react';
-import Modal from 'react-modal';
+import React from "react";
+import Modal from "react-modal";
 
-const ModalComponent = ({ isOpen, closeModal, inputValue, setInputValue, handleSubmit, error }) => {
-    
+interface ModalProps {
+  isOpen: boolean;
+  closeModal: () => void;
+  inputValue: string;
+  setInputValue: (value: string) => void;
+  handleSubmit: () => void;
+  error?: string;
+}
+
+const ModalComponent = ({ isOpen, closeModal, inputValue, setInputValue, handleSubmit, error }: ModalProps) => {
   return (
     <Modal
       isOpen={isOpen}
@@ -16,7 +24,7 @@ const ModalComponent = ({ isOpen, closeModal, inputValue, setInputValue, handleS
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
           placeholder="Enter URL"
-          className={error ? 'modal-input modal-input-error' : 'modal-input'}
+          className={error ? "modal-input modal-input-error" : "modal-input"}
         />
         {error && <span className="modal-error-message">{error}</span>}
         <div className="modal-button-group">

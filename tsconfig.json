@@ -1,0 +1,16 @@
+{
+    "compilerOptions": {
+      "jsx": "react",
+      "esModuleInterop": true,
+      "moduleResolution": "node",
+      "target": "es5",
+      "lib": ["dom", "dom.iterable", "esnext"],
+      "resolveJsonModule": true,
+      "baseUrl": "./src",
+      "paths": {
+        "*": ["*", "src/*"]
+      }
+    },
+    "include": ["src"]
+  }
+  

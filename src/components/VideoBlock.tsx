@@ -1,7 +1,11 @@
 import React from 'react';
 import ReactPlayer from 'react-player';
 
-const VideoBlock = ({ src }) => {
+interface VideoBlockProps {
+  src: string;
+}
+
+const VideoBlock: React.FC<VideoBlockProps> = ({ src }: VideoBlockProps) => {
   return (
     <div className="video-block">
       <ReactPlayer url={src} controls width="100%" height="auto" />
