@@ -1,19 +1,16 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { ContentState, convertToRaw, convertFromRaw  } from 'draft-js';
 import { EditorState, AtomicBlockUtils  } from 'draft-js';
-import { Editor } from 'react-draft-wysiwyg';
 import Modal from 'react-modal';
-import ImagePlugin from 'draft-js-image-plugin';
- import VideoPlugin from 'draft-js-video-plugin';
- import ReactPlayer from 'react-player';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
-import './App.css';
-import PictureIcon from './icons/picture-icon.png'
-import VideoIcon from './icons/video-icon.png'
-import SocialIcon from './icons/facebook-con.svg'
 
-const imagePlugin = ImagePlugin();
-const videoPlugin = VideoPlugin()
+import EditorComponent from './components/Editor';
+import VideoBlock from './components/VideoBlock';
+import SocialMediaBlockComponent from './components/SocialMediaBlock';
+import Dropdown from './components/DropDown';
+import ModalComponent from './components/Modal';
+
+import './App.css';
 
 function App() {
   const _contentState = ContentState.createFromText('');
@@ -34,7 +31,6 @@ const [error, setError] = useState('');
 const openModal = () => {
   setIsModalOpen(true);
 };
-
 // Function to handle closing the modal
 const closeModal = () => {
   setIsModalOpen(false);
@@ -44,15 +40,9 @@ const closeModal = () => {
 
 const rootElementRef = useRef(null);
 
-
 useEffect(() => {
   Modal.setAppElement(rootElementRef.current);
 }, []);
-
-
-  const handleEditorChange = (editorState) => {
-    setEditorState(editorState);
-  };
 
   const handleImageUpload = async (file) => {
     try {
@@ -138,40 +128,6 @@ useEffect(() => {
     }
   };
  
-  
-  
-  
-  const mediaBlockRenderer = (block) => {
-    if (block.getType() === 'atomic') {
-      const contentState = editorState.getCurrentContent();
-      const entity = contentState.getEntity(block.getEntityAt(0));
-      const type = entity.getType();
-  
-      if (type === 'video') {
-        const { src } = entity.getData();
-        return {
-          component: VideoBlock,
-          editable: false,
-          props: {
-            src: src,
-          },
-        };
-      } else if (type === 'social-media') {
-        const { linkUrl } = entity.getData();
-        return {
-          component: SocialMediaBlock,
-          editable: false,
-          props: {
-            linkUrl: linkUrl,
-          },
-        };
-      }
-    }
-  
-    return null;
-  };
-  
-
   const addSocialMediaBlock = (linkUrl) => {
     const contentState = editorState.getCurrentContent();
     const contentStateWithEntity = contentState.createEntity('social-media', 'IMMUTABLE', { linkUrl });
@@ -192,21 +148,11 @@ useEffect(() => {
     setSelectedVideo(videoUrl); 
     setEditorState(newEditorStateWithBlock);
   };
-
-  const VideoBlock = ({ src }) => {
-    return (
-      <div className="video-block">
-        <ReactPlayer url={src} controls width="100%" height="auto" />
-      </div>
-    );
-  };
   
   const SocialMediaBlock = ({ linkUrl }) => {
     return (
       <div className="social-media-block">
-        <a href={linkUrl} target="_blank" rel="noopener noreferrer">
-          {linkUrl}
-        </a>
+        <SocialMediaBlockComponent linkUrl={linkUrl} />
       </div>
     );
   };
@@ -217,45 +163,7 @@ useEffect(() => {
         <header className="App-header">This is the title</header>
         <div className="Editor-container">
           
-          <Editor
-            editorState={editorState}
-            onEditorStateChange={handleEditorChange}
-            wrapperClassName="wrapper-class"
-            editorClassName="editor-class"
-            toolbarClassName="toolbar-class"
-            toolbar={{
-              options: ['blockType', 'link', 'image', 'textAlign', 'inline', 'list'],
-              blockType: {
-                inDropdown: true,
-                options: ['Normal', 'H1', 'H2', 'H3', 'H4', 'H5', 'H6'],
-              },
-              inline: {
-                options: ['bold', 'italic'],
-              },
-              list: {
-                options: ['ordered', 'unordered', 'indent'],
-              },
-              link: {
-                options: ['link'],
-              },
-              image: {
-                className: 'custom-option-class',
-                uploadEnabled: false, // Disable image upload via toolbar
-                alt: { present: true, mandatory: true },
-                previewImage: true,
-                alignmentEnabled: true,
-                defaultSize: {
-                  width: '100%',
-                  height: 'auto',
-                },
-              },
-              textAlign: {
-                options: ['left', 'center', 'right'],
-              },
-            }}
-            plugins={[imagePlugin, videoPlugin]}
-            blockRendererFn={mediaBlockRenderer}
-          ></Editor>
+         <EditorComponent />
            {isLoading && (
             <div className="loader-container">
               <div className="loader"></div>
@@ -288,64 +196,18 @@ useEffect(() => {
     
       <button onClick={handleButtonClick}>+</button>
       <div>
-      <Modal
+      {isModalOpen && (
+      <ModalComponent
         isOpen={isModalOpen}
-        onRequestClose={closeModal}
-        className="modal-container"
-        overlayClassName="modal-overlay"
-      >
-        <div className="modal-content">
-          {/* Modal content */}
-          <input
-            type="text"
-            value={inputValue}
-            onChange={(e) => setInputValue(e.target.value)}
-            // className="modal-input"
-            placeholder="Enter URL"
-            className={error ? 'modal-input modal-input-error' : 'modal-input'}
-          />
-           {error && <span className="modal-error-message">{error}</span>}
-          <div className="modal-button-group">
-            <button onClick={handleSubmit} className="modal-submit-button">
-              Submit
-            </button>
-            <button onClick={closeModal} className="modal-cancel-button">
-              Cancel
-            </button>
-          </div>
-        </div>
-      </Modal>
+        closeModal={closeModal}
+        inputValue={inputValue}
+        setInputValue={setInputValue}
+        handleSubmit={handleSubmit}
+        error={error}
+      />
+    )}
     </div>
-
-       {showDropdown && (
-         <div className="dropdown-container">
-           <h2 className="dropdown-title">EMBEDS</h2>
-         <ul className="dropdown-options">
-           <li onClick={() => handleOptionClick('image')}>
-             <img src={PictureIcon} alt="icon" className="option-icon" />
-             <div>
-               <span className="option-title">Picture</span>
-               <p className="option-description">JPEG, PNG</p>
-             </div>
-           </li>
-           <li onClick={() => handleOptionClick('video')}>
-        <img src={VideoIcon} alt="Video" className="option-icon" />
-       <div>
-    <span className="option-title">Video</span>
-    <p className="option-description">Embed a YouTube video</p>
-  </div>
-</li>
-           <li onClick={() => handleOptionClick('social-media')}>
-             <img src={SocialIcon} alt="Social Media" className="option-icon" />
-             <div>
-               <span className="option-title">Social</span>
-               <p className="option-description">Embed a Facebook link</p>
-             </div>
-           </li>
-         </ul>
-       </div>
-       
-        )}
+    {showDropdown && <Dropdown handleOptionClick={handleOptionClick} />}
     </div>
   );
 
