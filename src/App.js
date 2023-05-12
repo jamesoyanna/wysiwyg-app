@@ -25,9 +25,6 @@ function App() {
   const [selectedSocialMedia, setSelectedSocialMedia] = useState(null);
   const fileInputRef = useRef(null);
   const [showDropdown, setShowDropdown] = useState(false);
-
-const [videoLink, setVideoLink] = useState('');
-const [socialMediaLink, setSocialMediaLink] = useState('');
 const [isLoading, setIsLoading] = useState(false);
 const [isModalOpen, setIsModalOpen] = useState(false);
 const [inputValue, setInputValue] = useState('');
@@ -51,7 +48,6 @@ const rootElementRef = useRef(null);
 useEffect(() => {
   Modal.setAppElement(rootElementRef.current);
 }, []);
-
 
 
   const handleEditorChange = (editorState) => {
@@ -114,10 +110,8 @@ useEffect(() => {
     if (option === 'image') {
       fileInputRef.current.click();
     } else if (option === 'video') {
-      setVideoLink('');
       openModal();
     } else if (option === 'social-media') {
-      setSocialMediaLink('');
       openModal();
     }
   };
@@ -131,10 +125,6 @@ useEffect(() => {
     const urlPattern = /^(www\.)|^(http(s)?:\/\/)/i;
     return urlPattern.test(url);
   };
-  
-  
-  
-
     
   const handleSubmit = () => {
     if (isVideoUrl(inputValue)) {
@@ -147,6 +137,9 @@ useEffect(() => {
       setError('Invalid URL');
     }
   };
+ 
+  
+  
   
   const mediaBlockRenderer = (block) => {
     if (block.getType() === 'atomic') {
