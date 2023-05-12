@@ -2,18 +2,19 @@ import React, { useState, useEffect, useRef } from "react";
 import { ContentState, convertToRaw, convertFromRaw, EditorState } from "draft-js";
 import { Editor } from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-import ImagePlugin from "draft-js-image-plugin";
-import VideoPlugin from "draft-js-video-plugin";
-import "../App.css";
+import createImagePlugin from 'draft-js-image-plugin';
+import createVideoPlugin from 'draft-js-video-plugin';
 
-const imagePlugin = ImagePlugin();
-const videoPlugin = VideoPlugin();
+import './editor.css';
+
+const imagePlugin = createImagePlugin();
+const videoPlugin = createVideoPlugin();
 
 const EditorComponent: React.FC = () => {
   const _contentState = ContentState.createFromText("");
   const raw = convertToRaw(_contentState);
   const contentState = convertFromRaw(raw);
-  const [editorState, setEditorState] = useState(EditorState.createWithContent(contentState));
+  const [editorState, setEditorState] = useState(() => EditorState.createWithContent(contentState));
   const [wordCount, setWordCount] = useState(0);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -78,10 +79,11 @@ const EditorComponent: React.FC = () => {
         style={{ display: 'none' }}
       />
       <div className="Editor-footer">
-        <div className="word-count">{`${wordCount}/1000 words`}</div>
+        <div className="word-count">{`${wordCount}/1000 words`}
         <button className="post-button" style={{ backgroundColor: 'green' }}>
           Post
         </button>
+        </div>
       </div>
     </div>
   );

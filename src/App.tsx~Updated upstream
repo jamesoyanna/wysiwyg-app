@@ -1,14 +1,23 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { ContentState, convertToRaw, convertFromRaw  } from 'draft-js';
+<<<<<<< Updated upstream:src/App.tsx
 import { EditorState, AtomicBlockUtils  } from 'draft-js';
 import Modal from 'react-modal';
+=======
+
+import { Editor } from 'react-draft-wysiwyg';
+
+import ImagePlugin from 'draft-js-image-plugin';
+ import VideoPlugin from 'draft-js-video-plugin';
+ import ReactPlayer from 'react-player';
+>>>>>>> Stashed changes:src/App.js
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
-import EditorComponent from './components/Editor/Editor';
+import EditorComponent from './components/Editor';
 import VideoBlock from './components/VideoBlock';
 import SocialMediaBlockComponent from './components/SocialMediaBlock';
-import Dropdown from './components/Dropdown/DropDown';
-import ModalComponent from './components/Modal/Modal';
+import Dropdown from './components/DropDown';
+import ModalComponent from './components/Modal';
 
 import './App.css';
 
@@ -22,6 +31,7 @@ function App() {
   const [selectedSocialMedia, setSelectedSocialMedia] = useState(null);
   const fileInputRef = useRef(null);
   const [showDropdown, setShowDropdown] = useState(false);
+<<<<<<< Updated upstream:src/App.tsx
   const [isLoading, setIsLoading] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [inputValue, setInputValue] = useState('');
@@ -43,6 +53,11 @@ const rootElementRef = useRef(null);
 useEffect(() => {
   Modal.setAppElement(rootElementRef.current);
 }, []);
+=======
+const [isLoading, setIsLoading] = useState(false);
+
+
+>>>>>>> Stashed changes:src/App.js
 
   const handleImageUpload = async (file: File) => {
     try {
@@ -106,6 +121,7 @@ useEffect(() => {
     }
   };
   
+<<<<<<< Updated upstream:src/App.tsx
   const isVideoUrl = (url: string) => {
     const youtubePattern = /^(https?:\/\/)?(www\.)?youtube\.com\/watch\?v=([a-zA-Z0-9_-]{11})/;
     return youtubePattern.test(url);
@@ -115,19 +131,13 @@ useEffect(() => {
     const urlPattern = /^(www\.)|^(http(s)?:\/\/)/i;
     return urlPattern.test(url);
   };
-    
-  const handleSubmit = () => {
-    if (isVideoUrl(inputValue)) {
-      addVideoBlock(inputValue);
-      closeModal();
-    } else if (isSocialMediaUrl(inputValue)) {
-      addSocialMediaBlock(inputValue);
-      closeModal();
-    } else {
-      setError('Invalid URL');
-    }
-  };
+=======
  
+>>>>>>> Stashed changes:src/App.js
+    
+  
+ 
+<<<<<<< Updated upstream:src/App.tsx
   const addSocialMediaBlock = (linkUrl: string) => {
     const contentState = editorState.getCurrentContent();
     const contentStateWithEntity = contentState.createEntity('social-media', 'IMMUTABLE', { linkUrl });
@@ -147,6 +157,50 @@ useEffect(() => {
     const newEditorStateWithBlock = AtomicBlockUtils.insertAtomicBlock(newEditorState, entityKey, ' ');
     setSelectedVideo(videoUrl); 
     setEditorState(newEditorStateWithBlock);
+=======
+  
+  
+  
+  const mediaBlockRenderer = (block) => {
+    if (block.getType() === 'atomic') {
+      const contentState = editorState.getCurrentContent();
+      const entity = contentState.getEntity(block.getEntityAt(0));
+      const type = entity.getType();
+  
+      if (type === 'video') {
+        const { src } = entity.getData();
+        return {
+          component: VideoBlock,
+          editable: false,
+          props: {
+            src: src,
+          },
+        };
+      } else if (type === 'social-media') {
+        const { linkUrl } = entity.getData();
+        return {
+          component: SocialMediaBlock,
+          editable: false,
+          props: {
+            linkUrl: linkUrl,
+          },
+        };
+      }
+    }
+  
+    return null;
+  };
+  
+
+  
+
+  const VideoBlock = ({ src }) => {
+    return (
+      <div className="video-block">
+        <ReactPlayer url={src} controls width="100%" height="auto" />
+      </div>
+    );
+>>>>>>> Stashed changes:src/App.js
   };
   
   const SocialMediaBlock = ({ linkUrl }: { linkUrl: string }) => {
@@ -194,8 +248,9 @@ useEffect(() => {
   )}
       </div>
     
-      <button className='add-button' onClick={handleButtonClick}>+</button>
+      <button onClick={handleButtonClick}>+</button>
       <div>
+<<<<<<< Updated upstream:src/App.tsx
       {isModalOpen && (
       <ModalComponent
         isOpen={isModalOpen}
@@ -206,6 +261,9 @@ useEffect(() => {
         error={error}
       />
     )}
+=======
+    
+>>>>>>> Stashed changes:src/App.js
     </div>
     {showDropdown && <Dropdown handleOptionClick={handleOptionClick} />}
     </div>

@@ -5,7 +5,7 @@ interface VideoBlockProps {
   src: string;
 }
 
-const VideoBlock: React.FC<VideoBlockProps> = ({ src }: VideoBlockProps) => {
+const VideoBlock: React.FC<VideoBlockProps> = ({ src }) => {
   return (
     <div className="video-block">
       <ReactPlayer url={src} controls width="100%" height="auto" />
