@@ -2,6 +2,16 @@
 
 The WYSIWYG (What You See Is What You Get) App is a powerful tool that enables you to visualize and design your app before publishing it. 
 
+#### Demo: [wysiwyg app](https://wysiwyg-app.netlify.app/)
+
+
+   Pictorial View:
+    ![wy-screen](https://github.com/jamesoyanna/wysiwyg-app/assets/26815113/d12e6ee5-0e1a-44a5-80ff-f66e7fd7dba1)
+
+    
+![wyswyg](https://github.com/jamesoyanna/wysiwyg-app/assets/26815113/754d982e-e418-48b6-a6f3-8492a4b414aa)
+
+
 ### Getting Started
 
     - Clone the repository or download the project files.
