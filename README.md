@@ -1,4 +1,4 @@
-## WYSIWYG App Builder
+## WYSIWYG App
 
 The WYSIWYG (What You See Is What You Get) App is a powerful tool that enables you to visualize and design your app before publishing it. 
 
