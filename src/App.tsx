@@ -150,7 +150,7 @@ function App() {
       <div className="Editor-wrapper">
         <header className="App-header">This is the title</header>
         <div className="Editor-container">
-          <EditorComponent editorState={editorState} setEditorState={setEditorState} />
+        <EditorComponent  />
           {isLoading && (
             <div className="loader-container">
               <div className="loader"></div>

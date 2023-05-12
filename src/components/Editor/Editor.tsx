@@ -1,14 +1,9 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef} from 'react';
 import { ContentState, convertToRaw, convertFromRaw, EditorState } from "draft-js";
 import { Editor } from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-import createImagePlugin from 'draft-js-image-plugin';
-import createVideoPlugin from 'draft-js-video-plugin';
 
 import './editor.css';
-
-const imagePlugin = createImagePlugin();
-const videoPlugin = createVideoPlugin();
 
 const EditorComponent: React.FC = () => {
   const _contentState = ContentState.createFromText("");
@@ -70,7 +65,6 @@ const EditorComponent: React.FC = () => {
           },
         }}
         readOnly={wordCount >= 1000}
-        plugins={[imagePlugin, videoPlugin]}
       />
 
       <input
