@@ -1,4 +1,4 @@
-import React, { useState,useEffect, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
 import EditorComponent from './components/Editor/Editor';
@@ -6,6 +6,7 @@ import VideoBlock from './components/VideoBlock';
 import SocialMediaBlockComponent from './components/SocialMediaBlock';
 import Dropdown from './components/Dropdown/DropDown';
 import ModalComponent from './components/Modal/Modal';
+import ImageUploadModal from 'components/imageupload/ImageUploadModal';
 
 import './App.css';
 
@@ -17,24 +18,22 @@ const App = () => {
   const [showDropdown, setShowDropdown] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isImageUploadModalOpen, setIsImageUploadModalOpen] = useState(false);
   const [inputValue, setInputValue] = useState('');
   const [error, setError] = useState('');
 
-  useEffect(() => {
-    const body = document.querySelector('body');
-    body.classList.add('blinking-cursor');
-
-    return () => {
-      body.classList.remove('blinking-cursor');
-    };
-  }, []);
 
   const openModal = () => {
     setIsModalOpen(true);
   };
+  
+  const openImageUploadModal = () => {
+    setIsImageUploadModalOpen(true);
+  };
 
   const closeModal = () => {
     setIsModalOpen(false);
+    setIsImageUploadModalOpen(false);
     setInputValue('');
     setError('');
   };
@@ -84,7 +83,8 @@ const App = () => {
 
   const handleOptionClick = (option) => {
     if (option === 'image') {
-      fileInputRef.current.click();
+      openImageUploadModal();
+      // fileInputRef.current.click();
     } else if (option === 'video') {
       openModal();
     } else if (option === 'social-media') {
@@ -143,6 +143,7 @@ const App = () => {
             </div>
           )}
           <input type="file" ref={fileInputRef} style={{ display: 'none' }} onChange={handleFileChange} />
+        
         </div>
         {selectedImage && (
           <div>
@@ -161,6 +162,8 @@ const App = () => {
         )}
       </div>
       <button onClick={handleButtonClick}>+</button>
+      {showDropdown && <Dropdown handleOptionClick={handleOptionClick} />}
+
       <div>
         {isModalOpen && (
           <ModalComponent
@@ -172,8 +175,14 @@ const App = () => {
             error={error}
           />
         )}
+
+     {isImageUploadModalOpen && (
+          <ImageUploadModal
+          closeModal={closeModal}
+          />
+        )}
       </div>
-      {showDropdown && <Dropdown handleOptionClick={handleOptionClick} />}
+   
     </div>
   );
 };
