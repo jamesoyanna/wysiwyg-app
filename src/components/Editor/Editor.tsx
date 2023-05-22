@@ -69,12 +69,13 @@ const EditorComponent = () => {
         style={{ display: 'none' }}
       />
       <div className="Editor-footer">
-        <div className="word-count">{`${wordCount}/1000 words`}
-        <button className="post-button" style={{ backgroundColor: 'green' }}>
+        <span className="word-count">{`${wordCount}/1000 words`}
+        </span>
+        
+      </div>
+      <button className="post-button" style={{ backgroundColor: 'green' }}>
           Post
         </button>
-        </div>
-      </div>
     </div>
   );
 };

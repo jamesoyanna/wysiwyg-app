@@ -25,27 +25,8 @@
   margin-bottom: 40px;
   border: 1px solid #ccc;
   padding-bottom: 150px;
+  border-radius: 3px;
 }
-
-.wrapper-class {
-  padding: 1rem;
-}
-
-.editor-class {
-  background-color: #fff;
-  padding: 1rem;
-  display: flex;
-  flex-direction: column;
-}
-
-.toolbar-class {
-  border: 1px solid #faf3f3;
-  background-color: #fff;
-  width: 100%;
-  display: flex;
-  justify-content: flex-start;
-}
-
 
 .toolbar-class .rdw-editor-toolbar {
   display: flex;

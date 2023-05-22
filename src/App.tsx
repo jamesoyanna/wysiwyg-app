@@ -85,7 +85,6 @@ const App = () => {
   const handleOptionClick = (option) => {
     if (option === 'image') {
       openImageUploadModal();
-      // fileInputRef.current.click();
     } else if (option === 'video') {
       openModal();
     } else if (option === 'social-media') {
@@ -99,9 +98,10 @@ const App = () => {
   };
 
   const isSocialMediaUrl = (url) => {
-    const urlPattern = /^(www\.)|^(http(s)?:\/\/)/i;
+    const urlPattern = /^(https?:\/\/)?(www\.)?([\w-]+\.[\w-]+(\.[\w-]+)*)(\/[\w-]*)*(\?.*)?(#.*)?$/i;
     return urlPattern.test(url);
   };
+  
 
   const handleSubmit = () => {
     if (isVideoUrl(inputValue)) {
