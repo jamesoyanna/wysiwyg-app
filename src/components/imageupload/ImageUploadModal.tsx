@@ -2,23 +2,11 @@ import React, { useState } from 'react';
 import './imageupload.css';
 import UploadIcon from '../../icons/upload.png'
 import CloseIcon from '../../icons/x.png'
-const ImageUploadModal = ({ closeModal }) => {
-  const [isUploading, setIsUploading] = useState(false);
 
-  const handleFileUpload = (event) => {
-    const file = event.target.files[0];
-    setIsUploading(true);
+const ImageUploadModal = ({ closeModal, isUploading, handleFileChange }) => {
+  const [error, setError] = useState('');
+ 
 
-    // Perform your file upload logic here
-
-    // Simulating the upload delay for demonstration
-    setTimeout(() => {
-      setIsUploading(false);
-      // Handle the uploaded file
-      console.log('Uploaded file:', file);
-      closeModal();
-    }, 2000);
-  };
 
   return (
     <div className="modal-overlay">
@@ -28,7 +16,7 @@ const ImageUploadModal = ({ closeModal }) => {
             <img src={UploadIcon}  alt='Upload Icon' className="upload-icon"/>
             {isUploading ? 'Uploading...' : ''}
           </label>
-          <input type="file" id="file-upload" className="file-upload" onChange={handleFileUpload} />
+          <input type="file" id="file-upload" className="file-upload" onChange={handleFileChange} />
         <p className="modal-title">Upload Image</p>
         <button className="modal-close" onClick={closeModal}>
           <img src={CloseIcon} alt='Close Icon'/>

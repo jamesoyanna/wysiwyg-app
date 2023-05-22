@@ -1,6 +1,5 @@
 import React, { useState, useRef } from 'react';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
-
 import EditorComponent from './components/Editor/Editor';
 import VideoBlock from './components/VideoBlock';
 import SocialMediaBlockComponent from './components/SocialMediaBlock';
@@ -16,7 +15,7 @@ const App = () => {
   const [selectedSocialMedia, setSelectedSocialMedia] = useState(null);
   const fileInputRef = useRef(null);
   const [showDropdown, setShowDropdown] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isUploading, setIsUploading] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isImageUploadModalOpen, setIsImageUploadModalOpen] = useState(false);
   const [inputValue, setInputValue] = useState('');
@@ -40,7 +39,8 @@ const App = () => {
 
   const handleImageUpload = async (file) => {
     try {
-      setIsLoading(true);
+      // setIsLoading(true);
+      setIsUploading(true);
       const formData = new FormData();
       formData.append('file', file);
       formData.append('upload_preset', 'wazobia');
@@ -68,7 +68,7 @@ const App = () => {
       console.error('Image upload error:', error);
       setError('Image upload error');
     } finally {
-      setIsLoading(false);
+      setIsUploading(false);
     }
   };
 
@@ -76,9 +76,11 @@ const App = () => {
     setShowDropdown(!showDropdown);
   };
 
+ 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     handleImageUpload(file);
+ 
   };
 
   const handleOptionClick = (option) => {
@@ -136,7 +138,7 @@ const App = () => {
         <header className="App-header">This is the title</header>
         <div className="Editor-container">
           <EditorComponent />
-          {isLoading && (
+          {isUploading && (
             <div className="loader-container">
               <div className="loader"></div>
               <span>uploading image...</span>
@@ -179,6 +181,8 @@ const App = () => {
      {isImageUploadModalOpen && (
           <ImageUploadModal
           closeModal={closeModal}
+          isUploading={isUploading}
+          handleFileChange={handleFileChange}
           />
         )}
       </div>
