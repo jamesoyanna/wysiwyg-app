@@ -1,6 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { ContentState, convertToRaw, convertFromRaw, EditorState, AtomicBlockUtils } from 'draft-js';
-import Modal from 'react-modal';
+import React, { useState,useEffect, useRef } from 'react';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
 import EditorComponent from './components/Editor/Editor';
@@ -11,11 +9,7 @@ import ModalComponent from './components/Modal/Modal';
 
 import './App.css';
 
-function App() {
-  const _contentState = ContentState.createFromText('');
-  const raw = convertToRaw(_contentState);
-  const contentState = convertFromRaw(raw);
-  const [editorState, setEditorState] = useState(() => EditorState.createWithContent(contentState));
+const App = () => {
   const [selectedImage, setSelectedImage] = useState(null);
   const [selectedVideo, setSelectedVideo] = useState(null);
   const [selectedSocialMedia, setSelectedSocialMedia] = useState(null);
@@ -25,6 +19,15 @@ function App() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [inputValue, setInputValue] = useState('');
   const [error, setError] = useState('');
+
+  useEffect(() => {
+    const body = document.querySelector('body');
+    body.classList.add('blinking-cursor');
+
+    return () => {
+      body.classList.remove('blinking-cursor');
+    };
+  }, []);
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -36,16 +39,9 @@ function App() {
     setError('');
   };
 
-  const rootElementRef = useRef(null);
-
-  useEffect(() => {
-    Modal.setAppElement(rootElementRef.current);
-  }, []);
-
   const handleImageUpload = async (file) => {
     try {
       setIsLoading(true);
-
       const formData = new FormData();
       formData.append('file', file);
       formData.append('upload_preset', 'wazobia');
@@ -101,10 +97,11 @@ function App() {
     return youtubePattern.test(url);
   };
 
-  const isSocialMediaUrl = (url: string) => {
+  const isSocialMediaUrl = (url) => {
     const urlPattern = /^(www\.)|^(http(s)?:\/\/)/i;
     return urlPattern.test(url);
   };
+
   const handleSubmit = () => {
     if (isVideoUrl(inputValue)) {
       addVideoBlock(inputValue);
@@ -118,23 +115,11 @@ function App() {
   };
 
   const addSocialMediaBlock = (linkUrl) => {
-    const contentState = editorState.getCurrentContent();
-    const contentStateWithEntity = contentState.createEntity('social-media', 'IMMUTABLE', { linkUrl });
-    const entityKey = contentStateWithEntity.getLastCreatedEntityKey();
-    const newEditorState = EditorState.set(editorState, { currentContent: contentStateWithEntity });
-    const newEditorStateWithBlock = AtomicBlockUtils.insertAtomicBlock(newEditorState, entityKey, ' ');
-    setEditorState(newEditorStateWithBlock);
     setSelectedSocialMedia(linkUrl);
   };
 
   const addVideoBlock = (videoUrl) => {
-    const contentState = editorState.getCurrentContent();
-    const contentStateWithEntity = contentState.createEntity('video', 'IMMUTABLE', { src: videoUrl });
-    const entityKey = contentStateWithEntity.getLastCreatedEntityKey();
-    const newEditorState = EditorState.set(editorState, { currentContent: contentStateWithEntity });
-    const newEditorStateWithBlock = AtomicBlockUtils.insertAtomicBlock(newEditorState, entityKey, ' ');
     setSelectedVideo(videoUrl);
-    setEditorState(newEditorStateWithBlock);
   };
 
   const SocialMediaBlock = ({ linkUrl }) => {
@@ -146,23 +131,18 @@ function App() {
   };
 
   return (
-    <div ref={rootElementRef} className="App">
+    <div className="App">
       <div className="Editor-wrapper">
         <header className="App-header">This is the title</header>
         <div className="Editor-container">
-        <EditorComponent  />
+          <EditorComponent />
           {isLoading && (
             <div className="loader-container">
               <div className="loader"></div>
               <span>uploading image...</span>
             </div>
           )}
-          <input
-            type="file"
-            ref={fileInputRef}
-            style={{ display: 'none' }}
-            onChange={handleFileChange}
-          />
+          <input type="file" ref={fileInputRef} style={{ display: 'none' }} onChange={handleFileChange} />
         </div>
         {selectedImage && (
           <div>
@@ -180,7 +160,6 @@ function App() {
           </div>
         )}
       </div>
-
       <button onClick={handleButtonClick}>+</button>
       <div>
         {isModalOpen && (
@@ -197,6 +176,6 @@ function App() {
       {showDropdown && <Dropdown handleOptionClick={handleOptionClick} />}
     </div>
   );
-}
+};
 
 export default App;

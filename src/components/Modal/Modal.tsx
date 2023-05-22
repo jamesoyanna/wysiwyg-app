@@ -2,6 +2,8 @@ import React from "react";
 import Modal from "react-modal";
 import "./modal.css";
 
+Modal.setAppElement('#root');
+
 interface ModalProps {
   isOpen: boolean;
   closeModal: () => void;

@@ -1,27 +1,23 @@
-import React, { useState, useEffect, useRef} from 'react';
-import { ContentState, convertToRaw, convertFromRaw, EditorState } from "draft-js";
-import { Editor } from "react-draft-wysiwyg";
-import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+import React, { useState, useEffect, useRef } from 'react';
+import { Editor } from 'react-draft-wysiwyg';
+import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
 import './editor.css';
 
-const EditorComponent: React.FC = () => {
-  const _contentState = ContentState.createFromText("");
-  const raw = convertToRaw(_contentState);
-  const contentState = convertFromRaw(raw);
-  const [editorState, setEditorState] = useState(() => EditorState.createWithContent(contentState));
+const EditorComponent = () => {
+  const [editorState, setEditorState] = useState(null);
   const [wordCount, setWordCount] = useState(0);
-  const fileInputRef = useRef<HTMLInputElement>(null);
+  const fileInputRef = useRef(null);
 
   useEffect(() => {
-    fileInputRef.current = document.createElement("input");
-    fileInputRef.current.type = "file";
+    fileInputRef.current = document.createElement('input');
+    fileInputRef.current.type = 'file';
   }, []);
 
-  const handleEditorChange = (editorState: EditorState) => {
-    setEditorState(editorState);
-    const contentState = editorState.getCurrentContent();
-    const plainText = contentState.getPlainText("");
+  const handleEditorChange = (state) => {
+    setEditorState(state);
+    const contentState = state.getCurrentContent();
+    const plainText = contentState.getPlainText('');
     const words = plainText.trim().split(/\s+/);
     setWordCount(words.length);
   };
@@ -51,7 +47,7 @@ const EditorComponent: React.FC = () => {
           },
           image: {
             className: 'custom-option-class',
-            uploadEnabled: false, // Disable image upload via toolbar
+            uploadEnabled: false,
             alt: { present: true, mandatory: true },
             previewImage: true,
             alignmentEnabled: true,
