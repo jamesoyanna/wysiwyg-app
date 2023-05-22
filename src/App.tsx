@@ -21,7 +21,6 @@ const App = () => {
   const [inputValue, setInputValue] = useState('');
   const [error, setError] = useState('');
 
-
   const openModal = () => {
     setIsModalOpen(true);
   };
@@ -75,19 +74,15 @@ const App = () => {
     setShowDropdown(!showDropdown);
   };
 
- 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     handleImageUpload(file);
- 
   };
 
   const handleOptionClick = (option) => {
     if (option === 'image') {
       openImageUploadModal();
-    } else if (option === 'video') {
-      openModal();
-    } else if (option === 'social-media') {
+    } else if (option === 'video' || option === 'social-media') {
       openModal();
     }
   };
@@ -101,7 +96,6 @@ const App = () => {
     const urlPattern = /^(https?:\/\/)?(www\.)?([\w-]+\.[\w-]+(\.[\w-]+)*)(\/[\w-]*)*(\?.*)?(#.*)?$/i;
     return urlPattern.test(url);
   };
-  
 
   const handleSubmit = () => {
     if (isVideoUrl(inputValue)) {
@@ -144,7 +138,6 @@ const App = () => {
             </div>
           )}
           <input type="file" ref={fileInputRef} style={{ display: 'none' }} onChange={handleFileChange} />
-        
         </div>
         {selectedImage && (
           <div>
@@ -177,15 +170,14 @@ const App = () => {
           />
         )}
 
-     {isImageUploadModalOpen && (
+        {isImageUploadModalOpen && (
           <ImageUploadModal
-          closeModal={closeModal}
-          isUploading={isUploading}
-          handleFileChange={handleFileChange}
+            closeModal={closeModal}
+            isUploading={isUploading}
+            handleFileChange={handleFileChange}
           />
         )}
       </div>
-   
     </div>
   );
 };

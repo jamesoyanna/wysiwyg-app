@@ -14,6 +14,10 @@ interface ModalProps {
 }
 
 const ModalComponent = ({ isOpen, closeModal, inputValue, setInputValue, handleSubmit, error }: ModalProps) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInputValue(e.target.value);
+  };
+
   return (
     <Modal
       isOpen={isOpen}
@@ -25,7 +29,7 @@ const ModalComponent = ({ isOpen, closeModal, inputValue, setInputValue, handleS
         <input
           type="text"
           value={inputValue}
-          onChange={(e) => setInputValue(e.target.value)}
+          onChange={handleInputChange}
           placeholder="Enter URL"
           className={error ? "modal-input modal-input-error" : "modal-input"}
         />

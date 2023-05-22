@@ -7,6 +7,7 @@ import './editor.css';
 const EditorComponent = () => {
   const [editorState, setEditorState] = useState(null);
   const [wordCount, setWordCount] = useState(0);
+  const [isLimitExceeded, setIsLimitExceeded] = useState(false);
   const fileInputRef = useRef(null);
 
   useEffect(() => {
@@ -15,11 +16,14 @@ const EditorComponent = () => {
   }, []);
 
   const handleEditorChange = (state) => {
-    setEditorState(state);
     const contentState = state.getCurrentContent();
     const plainText = contentState.getPlainText('');
     const words = plainText.trim().split(/\s+/);
-    setWordCount(words.length);
+    const currentWordCount = words.length;
+
+    setEditorState(state);
+    setWordCount(currentWordCount);
+    setIsLimitExceeded(currentWordCount > 1000);
   };
 
   return (
@@ -60,22 +64,19 @@ const EditorComponent = () => {
             options: ['left', 'center', 'right'],
           },
         }}
-        readOnly={wordCount >= 1000}
+        readOnly={isLimitExceeded}
       />
 
-      <input
-        type="file"
-        ref={fileInputRef}
-        style={{ display: 'none' }}
-      />
+      <input type="file" ref={fileInputRef} style={{ display: 'none' }} />
       <div className="Editor-footer">
-        <span className="word-count">{`${wordCount}/1000 words`}
+        <span className={`word-count ${isLimitExceeded ? 'exceeded' : ''}`}>
+          {`${wordCount}/1000 words`}
         </span>
-        
+        {isLimitExceeded && <span className="limit-exceeded">Limit exceeded</span>}
       </div>
       <button className="post-button" style={{ backgroundColor: 'green' }}>
-          Post
-        </button>
+        Post
+      </button>
     </div>
   );
 };
