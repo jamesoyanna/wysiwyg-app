@@ -39,7 +39,6 @@ const App = () => {
 
   const handleImageUpload = async (file) => {
     try {
-      // setIsLoading(true);
       setIsUploading(true);
       const formData = new FormData();
       formData.append('file', file);

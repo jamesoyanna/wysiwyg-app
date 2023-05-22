@@ -1,12 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './imageupload.css';
 import UploadIcon from '../../icons/upload.png'
 import CloseIcon from '../../icons/x.png'
 
 const ImageUploadModal = ({ closeModal, isUploading, handleFileChange }) => {
-  const [error, setError] = useState('');
- 
-
 
   return (
     <div className="modal-overlay">
