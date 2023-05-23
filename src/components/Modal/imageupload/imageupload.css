@@ -18,8 +18,8 @@
   }
   
   .modal-title {
-    color: #666666;
-    font-size: 18px;
+    color: #c1c4c4;
+    font-size: 21px;
     margin-bottom: 16px;
   }
   
@@ -28,6 +28,8 @@
     padding: 25px;
     margin-bottom: 16px;
     border-radius: 4px;
+    background-color: #f8fdfd;
+    color: red;
   }
   
   .upload-label {
@@ -52,7 +54,8 @@
   }
 
   .upload-icon {
-    width: 35px;
-    height: 35px;
+    width: 55px;
+    height: 55px;
     margin-bottom: 8px;
+    color: red !important;
   }

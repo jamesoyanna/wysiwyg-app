@@ -1,6 +1,6 @@
 import React from 'react';
 import './imageupload.css';
-import UploadIcon from '../../../icons/upload.png';
+import UploadIcon from '../../../icons/cloud-upload.png';
 import CloseIcon from '../../../icons/x.png';
 
 const ImageUploadModal = ({ closeModal, isUploading, handleFileChange }) => {
@@ -18,7 +18,7 @@ const ImageUploadModal = ({ closeModal, isUploading, handleFileChange }) => {
           )}
           </label>
           <input type="file" id="file-upload" className="file-upload" onChange={handleFileChange} />
-          <p className="modal-title">Upload Image</p>
+          <p className="modal-title">Click here to upload image</p>
           <button className="modal-close" onClick={closeModal}>
             <img src={CloseIcon} alt="Close Icon" />
           </button>
