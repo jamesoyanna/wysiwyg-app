@@ -138,8 +138,6 @@ const App: React.FC<AppProps> = () => {
         <header className="App-header">This is the title</header>
         <div className="Editor-container">
           <EditorComponent />
-
-          <input type="file" ref={fileInputRef} style={{ display: 'none' }} onChange={handleFileChange} />
         </div>
         {selectedImage && (
           <div>
@@ -157,7 +155,12 @@ const App: React.FC<AppProps> = () => {
           </div>
         )}
       </div>
-      <button onClick={handleButtonClick}>+</button>
+      <div className='button-container'>
+      <button className="post-button" style={{ backgroundColor: 'green' }}>
+        Post
+      </button>
+      </div>
+      <button className='plus-button' onClick={handleButtonClick}>+</button>
       {showDropdown && <Dropdown handleOptionClick={handleOptionClick} />}
 
       <div>

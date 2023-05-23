@@ -46,7 +46,7 @@
   text-align: center;
 }
 
-button {
+.plus-button {
   margin-right: auto;
   margin-left: 30rem;
   position: relative;
@@ -79,6 +79,28 @@ button {
   border-top-color: #007bff;
   animation: spin 1s linear infinite;
 }
+.button-container {
+  display: flex;
+  justify-content: flex-end;
+  width: 46%;
+  padding-right: 20px;
+  margin-top: -26px;
+}
+
+.post-button {
+  padding: 8px 30px;
+  border: none;
+  border-radius: 4px;
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: bold;
+  background-color: green;
+  margin-top: 0px;
+  cursor: pointer;
+}
+
+
+
 
 @keyframes spin {
   to {

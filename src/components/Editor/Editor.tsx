@@ -74,9 +74,7 @@ const EditorComponent = () => {
         </span>
         {isLimitExceeded && <span className="limit-exceeded">Limit exceeded</span>}
       </div>
-      <button className="post-button" style={{ backgroundColor: 'green' }}>
-        Post
-      </button>
+
     </div>
   );
 };
