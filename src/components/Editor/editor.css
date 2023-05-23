@@ -64,5 +64,6 @@
     top: 194px;
     left: 60px;
     cursor: pointer;
+    position: fixed;
   }
   
