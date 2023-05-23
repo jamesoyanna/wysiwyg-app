@@ -23,19 +23,18 @@ visualize and design your app before publishing it. It has text editor interface
 
 main View.
 
-![main-front](https://github.com/jamesoyanna/settings-page/assets/26815113/bb382370-954b-4760-bfc1-b87766f5c363)
-
+![Text editor](https://github.com/jamesoyanna/settings-page/assets/26815113/ad80ccdb-e777-4672-9a70-021ab35adad6)
 
 
 Image  and Video upload
-![upload1](https://github.com/jamesoyanna/settings-page/assets/26815113/73572945-0e49-47f3-a0cf-94857a52bb74)
-
+![video & picture upload](https://github.com/jamesoyanna/settings-page/assets/26815113/c98d1007-184d-4721-bf3d-74dca000a9b8)
 
 
 Image and Video upload Modal:
 ![modal1](https://github.com/jamesoyanna/settings-page/assets/26815113/467f7dd7-51e0-457c-8b98-a67ab6064a6a)
 
-![upload1](https://github.com/jamesoyanna/settings-page/assets/26815113/a4d8f539-8e93-4c5c-a2ef-a62b3de83a87)
+File Upload Area:
+![modal2](https://github.com/jamesoyanna/settings-page/assets/26815113/4ecfd93d-cbe3-4dd7-8c56-b1cf619db81b)
 
 
 ## How to use the application
