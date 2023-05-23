@@ -1,7 +1,7 @@
 import React from 'react';
 import './imageupload.css';
-import UploadIcon from '../../icons/upload.png';
-import CloseIcon from '../../icons/x.png';
+import UploadIcon from '../../../icons/upload.png';
+import CloseIcon from '../../../icons/x.png';
 
 const ImageUploadModal = ({ closeModal, isUploading, handleFileChange }) => {
   return (
@@ -10,7 +10,12 @@ const ImageUploadModal = ({ closeModal, isUploading, handleFileChange }) => {
         <div className="upload-area">
           <label htmlFor="file-upload" className="upload-label">
             <img src={UploadIcon} alt="Upload Icon" className="upload-icon" />
-            {isUploading ? 'Uploading...' : ''}
+            {isUploading && (
+            <div className="loader-container">
+              <div className="loader"></div>
+              <span>uploading image...</span>
+            </div>
+          )}
           </label>
           <input type="file" id="file-upload" className="file-upload" onChange={handleFileChange} />
           <p className="modal-title">Upload Image</p>

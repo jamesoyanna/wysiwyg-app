@@ -5,7 +5,7 @@ import VideoBlock from './components/VideoBlock';
 import SocialMediaBlockComponent from './components/SocialMediaBlock';
 import Dropdown from './components/Dropdown/DropDown';
 import ModalComponent from './components/Modal/Modal';
-import ImageUploadModal from 'components/imageupload/ImageUploadModal';
+import ImageUploadModal from 'components/Modal/imageupload/ImageUploadModal';
 
 import './App.css';
 
@@ -131,12 +131,7 @@ const App = () => {
         <header className="App-header">This is the title</header>
         <div className="Editor-container">
           <EditorComponent />
-          {isUploading && (
-            <div className="loader-container">
-              <div className="loader"></div>
-              <span>uploading image...</span>
-            </div>
-          )}
+         
           <input type="file" ref={fileInputRef} style={{ display: 'none' }} onChange={handleFileChange} />
         </div>
         {selectedImage && (
