@@ -1,4 +1,4 @@
-import React, { useState, useRef, ChangeEvent } from 'react';
+import React, { useState, ChangeEvent } from 'react';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import EditorComponent from './components/Editor/Editor';
 import VideoBlock from './components/VideoBlock';
@@ -20,7 +20,6 @@ const App: React.FC<AppProps> = () => {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [selectedVideo, setSelectedVideo] = useState<string | null>(null);
   const [selectedSocialMedia, setSelectedSocialMedia] = useState<string | null>(null);
-  // const fileInputRef = useRef<HTMLInputElement>(null);
   const [showDropdown, setShowDropdown] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
