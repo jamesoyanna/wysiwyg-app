@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, ChangeEvent } from 'react';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import EditorComponent from './components/Editor/Editor';
 import VideoBlock from './components/VideoBlock';
@@ -9,11 +9,18 @@ import ImageUploadModal from 'components/Modal/imageupload/ImageUploadModal';
 
 import './App.css';
 
-const App = () => {
-  const [selectedImage, setSelectedImage] = useState(null);
-  const [selectedVideo, setSelectedVideo] = useState(null);
-  const [selectedSocialMedia, setSelectedSocialMedia] = useState(null);
-  const fileInputRef = useRef(null);
+interface AppProps {}
+
+interface CloudinaryResponse {
+  ok: boolean;
+  secure_url: string;
+}
+
+const App: React.FC<AppProps> = () => {
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [selectedVideo, setSelectedVideo] = useState<string | null>(null);
+  const [selectedSocialMedia, setSelectedSocialMedia] = useState<string | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const [showDropdown, setShowDropdown] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -24,7 +31,7 @@ const App = () => {
   const openModal = () => {
     setIsModalOpen(true);
   };
-  
+
   const openImageUploadModal = () => {
     setIsImageUploadModalOpen(true);
   };
@@ -36,7 +43,7 @@ const App = () => {
     setError('');
   };
 
-  const handleImageUpload = async (file) => {
+  const handleImageUpload = async (file: File) => {
     try {
       setIsUploading(true);
       const formData = new FormData();
@@ -53,7 +60,7 @@ const App = () => {
       });
 
       if (response.ok) {
-        const data = await response.json();
+        const data: CloudinaryResponse = await response.json();
         const imageUrl = data.secure_url;
 
         setSelectedImage(imageUrl);
@@ -74,12 +81,12 @@ const App = () => {
     setShowDropdown(!showDropdown);
   };
 
-  const handleFileChange = (event) => {
+  const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files[0];
     handleImageUpload(file);
   };
 
-  const handleOptionClick = (option) => {
+  const handleOptionClick = (option: string) => {
     if (option === 'image') {
       openImageUploadModal();
     } else if (option === 'video' || option === 'social-media') {
@@ -87,12 +94,12 @@ const App = () => {
     }
   };
 
-  const isVideoUrl = (url) => {
+  const isVideoUrl = (url: string) => {
     const youtubePattern = /^(https?:\/\/)?(www\.)?youtube\.com\/watch\?v=([a-zA-Z0-9_-]{11})/;
     return youtubePattern.test(url);
   };
 
-  const isSocialMediaUrl = (url) => {
+  const isSocialMediaUrl = (url: string) => {
     const urlPattern = /^(https?:\/\/)?(www\.)?([\w-]+\.[\w-]+(\.[\w-]+)*)(\/[\w-]*)*(\?.*)?(#.*)?$/i;
     return urlPattern.test(url);
   };
@@ -109,15 +116,15 @@ const App = () => {
     }
   };
 
-  const addSocialMediaBlock = (linkUrl) => {
+  const addSocialMediaBlock = (linkUrl: string) => {
     setSelectedSocialMedia(linkUrl);
   };
 
-  const addVideoBlock = (videoUrl) => {
+  const addVideoBlock = (videoUrl: string) => {
     setSelectedVideo(videoUrl);
   };
 
-  const SocialMediaBlock = ({ linkUrl }) => {
+  const SocialMediaBlock: React.FC<{ linkUrl: string }> = ({ linkUrl }) => {
     return (
       <div className="social-media-block">
         <SocialMediaBlockComponent linkUrl={linkUrl} />
@@ -131,7 +138,7 @@ const App = () => {
         <header className="App-header">This is the title</header>
         <div className="Editor-container">
           <EditorComponent />
-         
+
           <input type="file" ref={fileInputRef} style={{ display: 'none' }} onChange={handleFileChange} />
         </div>
         {selectedImage && (
