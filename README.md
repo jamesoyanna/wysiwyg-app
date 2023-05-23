@@ -1,35 +1,109 @@
 ## WYSIWYG App
 
-The WYSIWYG (What You See Is What You Get) App is a powerful tool that enables you to visualize and design your app before publishing it. 
+### About Project
+The WYSIWYG (What You See Is What You Get) App is a powerful tool that enables you to 
+visualize and design your app before publishing it. It has text editor interface to format your text the way you want it. 
 
-#### Demo: [wysiwyg app](https://wysiwyg-app.netlify.app/)
+## Application Features
+-Real-Time Text Editing: 
+- Video Uploading
+- Image Uploading
+-Social Media Link upload
+
+## Application Functionalities
+- You can type into the text editor field and you can format your text accordingly.
+
+-You also have the ability to upload an image,video and social media link.
+
+- The application also count the of words entered into the text editor area. When its more then 1000, it will display an error message showing limit exceeded.
+
+#### Live view of the application Demo can be found here- [wysiwyg app](https://wysiwyg-app.netlify.app/)
+
+### Pictorial View of the Application.
+
+main View.
+
+![main-front](https://github.com/jamesoyanna/settings-page/assets/26815113/bb382370-954b-4760-bfc1-b87766f5c363)
 
 
-   Pictorial View:
-    ![wy-screen](https://github.com/jamesoyanna/wysiwyg-app/assets/26815113/d12e6ee5-0e1a-44a5-80ff-f66e7fd7dba1)
 
-    
-![wyswyg](https://github.com/jamesoyanna/wysiwyg-app/assets/26815113/754d982e-e418-48b6-a6f3-8492a4b414aa)
+Image  and Video upload
+![upload1](https://github.com/jamesoyanna/settings-page/assets/26815113/73572945-0e49-47f3-a0cf-94857a52bb74)
 
 
-### Getting Started
 
-    - Clone the repository or download the project files.
-    - Install the necessary dependencies by running npm install.
-    - Start the development server with npm start.
-    - Open the app builder in your browser and begin designing your app
+Image and Video upload Modal:
+![modal1](https://github.com/jamesoyanna/settings-page/assets/26815113/467f7dd7-51e0-457c-8b98-a67ab6064a6a)
 
-Dependencies
+![upload1](https://github.com/jamesoyanna/settings-page/assets/26815113/a4d8f539-8e93-4c5c-a2ef-a62b3de83a87)
 
-    React: A JavaScript library for building user interfaces.
 
-    Typescript: A programming language and open-source superset of JavaScript
-    React-Draft-Wysiwyg: A rich text editor framework for React that provides a WYSIWYG editing experience.
+## How to use the application
 
-    Draft-JS: A JavaScript rich text editor framework for React that provides advanced text editing capabilities.
+## Table of Contents
+- [Getting Started](#getting-started)
+	- [Tools Required](#tools-required)
+	- [Installation](#installation)
+- [Development](#development)
+- [Running the App](#running-the-app)
+- [Deployment](#deployment)
+- [Authors](#authors)
+- [License](#license)
 
-    react-dropzone: React library used for file uploads. It provides an easy-to-use interface for users to drag and drop files or click to browse and select files from their local file system.
+## Getting Started
 
-    react-modal: A library for creating modals or dialog windows in React applications.
-### Author:
-James Oyanna 
+#### Dependencies
+
+The project is built with;
+* [React JS](https://beta.reactjs.org/) -Library for building user interfaces.
+
+* [Typescript](https://www.typescriptlang.org/) - Typescript: A programming language and open-source superset of JavaScript.
+
+* [React Draft-wysiwyg](https://jpuri.github.io/react-draft-wysiwyg/#/) - React-Draft-Wysiwyg: A rich text editor framework for React that provides a WYSIWYG editing experience.
+
+* [React dropzone](https://react-dropzone.js.org/) - react-dropzone: React library used for file uploads. It provides an easy-to-use interface for users to drag and drop files or click to browse and select files from their local file system.
+
+* [React Modal](https://www.npmjs.com/package/react-modal) - React-modal: A library for creating modals or dialog windows in React applications.
+
+### Tools Required
+The following tools are required to run this application:
+
+* A text editor like Visual Studio Code
+* Command Line
+
+### Getting the source code
+You can clone the repository directly using this command:
+git clone https://github.com/jamesoyanna/wysiwyg-app.git
+OR clicking on the code button at the top to clone the application.
+
+### Installation
+Installation steps:
+
+Node.js and Yarn or Npm
+Your computer must have installed nodejs, and yarn to run this application You can download Node.js from https://nodejs.org and yarn from https://yarnpkg.com/lang/en/docs/install/ . NPM comes bundled with Node.js
+
+![nodejs](https://user-images.githubusercontent.com/26815113/132867561-bf2ec1a2-cd63-461f-95dd-e95c1c6676c7.PNG)
+
+## Install Npm Packages
+After clonning, to run the application locally, you will have to install all the dependencies and packages. 
+Open your terminal and navigate into the project folder using the command:
+cd wysiwyg-app
+
+
+### Development server
+
+#### Running the Application
+
+  ``` 
+Run yarn start or npm start from the root of the project folder to start the development server. 
+Go to http://localhost:3000 on your browser. Your app should be running.
+The app will automatically reload if you make changes to any of the source files.
+  ```
+
+## Author
+
+#### James Oyanna
+* [GitHub](https://github.com/jamesoyanna)
+* [LinkedIn](https://www.linkedin.com/in/jamesoyanna)
+
+
